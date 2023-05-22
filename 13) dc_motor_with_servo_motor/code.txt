@@ -1,0 +1,37 @@
+#include<Servo.h>
+int servoPin = 13;
+Servo servo1;
+
+//Motor A
+const int motorPin1  = 5;  // Pin 14 of L293
+const int motorPin2  = 6;  // Pin 10 of L293
+
+//Motor B
+const int motorPin3  = 10; // Pin  7 of L293
+const int motorPin4  = 9;  // Pin  2 of L293
+
+//This will run only one time.
+
+void setup(){
+  	servo1.attach(servoPin);
+  
+    //Set pins as outputs
+    pinMode(motorPin1, OUTPUT);
+    pinMode(motorPin2, OUTPUT);
+    pinMode(motorPin3, OUTPUT);
+    pinMode(motorPin4, OUTPUT);
+}
+
+void loop(){
+    digitalWrite(motorPin1, HIGH);
+    digitalWrite(motorPin2, LOW);
+    digitalWrite(motorPin3, HIGH);
+    digitalWrite(motorPin4, LOW);
+  
+    servo1.write(0);
+    delay(1500);
+    servo1.write(90);
+    delay(1500);
+    servo1.write(150);
+    delay(1500);
+}
