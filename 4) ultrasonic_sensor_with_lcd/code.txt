@@ -1,0 +1,54 @@
+#define echoPin 7
+#define triggerPin 6
+
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(11, 12, 2, 3, 4, 5); //sets the interfacing pins
+
+
+void setup()
+{
+   pinMode(triggerPin, OUTPUT); // Sets the trigPin as an OUTPUT
+   pinMode(echoPin, INPUT); // Sets the echoPin as an INPUT
+   Serial.begin(2400); // Serial Communication is starting with 9600 of baudrate speed
+   Serial.println("Ultrasonic Sensor HC-SR04 Test"); // print some text in Serial Monitor
+   Serial.println("with Arduino UNO");
+
+   lcd.begin(16, 2); //initialize the 16*2 LCD
+}
+  
+void loop(){
+  long highPulseDuration;
+  int calculatedDistanceCm;
+  
+  //Set the trigPin to low, before setting it to high for the pulse
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(5);
+  
+  // Create the 10 milli seconds pulse on the trig pin
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  
+  // Set the pin to low to end the pulse
+  digitalWrite(triggerPin, LOW);
+
+  // Read the duration of the high pulse on the echo pin
+  highPulseDuration = pulseIn(echoPin, HIGH);
+  
+  // Calculating the distance
+  calculatedDistanceCm = (highPulseDuration * 0.034 )/ 2; 
+  
+  
+  // Displays the distance on the Serial Monitor
+  Serial.print("Calculated Distance: ");
+  Serial.print(calculatedDistanceCm);
+  Serial.println(" cm");
+  
+  // Displays the distance on the LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Distance is ");
+  lcd.print(calculatedDistanceCm);
+  lcd.print(" cm");
+  
+  delay(200);
+  lcd.clear();
+}
